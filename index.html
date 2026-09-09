@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PICTOLOOK Gallery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-animation">
+  <div class="grid-background"></div>
+  <div class="floating-blob blob-1"></div>
+  <div class="floating-blob blob-2"></div>
+  <div class="floating-blob blob-3"></div>
+  <div class="floating-blob blob-4"></div>
+</div>
+
+  <div class="back"></div>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="haha">
+      <div class="navbar">
+        <a href="#home" class="navbar-logo">
+          <img src="logo.webp" alt="Logo" class="navbar-logo-img">
+          <h1 class="title">PICTOLOOK</h1>
+        </a>
+        <ul class="navbar-menu">
+          <li class="navitem"><a href="#home" class="navbar-link-active" id="homeLink">Home</a></li>
+          <li class="navitem dropdown">
+            <a href="#categories" class="navbar-link" aria-expanded="false">Categories</a>
+            <ul class="dropdown-menu">
+              <li class="navbar-item"><a href="#Nature" class="navbar-link category-link">Nature</a></li>
+              <li class="navbar-item"><a href="#Flower" class="navbar-link category-link">Flower</a></li>
+              <li class="navbar-item"><a href="#Animal" class="navbar-link category-link">Animal</a></li>
+              <li class="navbar-item"><a href="#Bird" class="navbar-link category-link">Bird</a></li>
+              <li class="navbar-item"><a href="#Gadgets" class="navbar-link category-link">Gadgets</a></li>
+              <li class="navbar-item"><a href="#Study" class="navbar-link category-link">Study</a></li>
+            </ul>
+          </li>
+          <li class="navitem"><a href="#footer" class="navbar-link">About</a></li>
+          <li class="navitem"><a href="#ContactUs" class="navbar-link" id="contactLink">Contact Us</a></li>
+          <li class="navitem nav-actions">
+            <button class="header-action saved-action" id="favoritesToggle" type="button" aria-label="Show saved images"><i class="fa-solid fa-bookmark" aria-hidden="true"></i><span>Saved</span><span id="savedCount">0</span></button>
+            <button class="header-action theme-toggle" id="themeToggle" type="button" aria-label="Switch to night mode" title="Switch theme">
+              <svg class="theme-icon sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
+              <svg class="theme-icon moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8Z"></path></svg>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <section class="search">
+      <div class="searchbar">
+        <input placeholder="Search images" type="text" class="search-input" aria-label="Search images">
+        <button class="clear-search" type="button" aria-label="Clear search">&times;</button>
+      </div>
+      <div class="features">
+        <ul class="Categories">
+          <li class="feature-item"><a href="#All" class="feature-link category-link">All</a></li>
+          <li class="feature-item"><a href="#Sketchy" class="feature-link category-link">Sketchy</a></li>
+          <li class="feature-item"><a href="#Animated" class="feature-link category-link">Animated</a></li>
+          <li class="feature-item"><a href="#Dark" class="feature-link category-link">Dark</a></li>
+          <li class="feature-item"><a href="#Light" class="feature-link category-link">Light</a></li>
+        </ul>
+      </div>
+    </section>
+  </header> 
+
+  <!-- Gallery -->
+  <main class="gallery">
+    <div class="gallery-heading">
+      <div>
+        <p class="eyebrow">Curated visual inspiration</p>
+        <h2 id="galleryTitle">Explore nature</h2>
+        <p class="gallery-caption">Find a little beauty in every scroll, from quiet details to wild horizons.</p>
+      </div>
+      <p class="gallery-status" id="galleryStatus" aria-live="polite">Loading images...</p>
+    </div>
+    <div class="image-grid" id="imageGrid"></div>
+    <div class="empty-state" id="emptyState" hidden>
+      <strong>No saved images yet</strong>
+      <span>Tap the bookmark icon on an image to keep it here.</span>
+    </div>
+    <!-- Left Sidebar -->
+<div class="sidebar" aria-label="Gallery tools">
+  <button class="nav-btn" id="genAIBtn" title="Generate AI Images" aria-label="Generate AI Images">
+    <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+  </button>
+  <button class="nav-btn" id="likedBtn" title="Liked Images" aria-label="Liked Images">
+    <i class="fa-solid fa-heart" aria-hidden="true"></i>
+  </button>
+  <button class="nav-btn" id="downloadedBtn" title="Downloaded Images" aria-label="Downloaded Images">
+    <i class="fa-solid fa-download" aria-hidden="true"></i>
+  </button>
+</div>
+
+<!-- Right-side GenAI Panel -->
+<div class="genai-panel" id="genaiPanel">
+  <button class="panel-close" id="closeGenAIPanel" type="button" aria-label="Close Generate Images panel">&times;</button>
+  <h2>✨ Find with GenAI</h2>
+  <input type="text" id="promptInput" placeholder="Enter your prompt...">
+  <button id="generateBtn" type="button"><i class="fa-solid fa-sparkles" aria-hidden="true"></i> Generate</button>
+  <p class="genai-status" id="genaiStatus" aria-live="polite"></p>
+  <div id="outputArea"></div>
+</div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="footbruh" id="ContactUs">
+      <p>PICTOLOOK © 2026 | Built by Angelin Praisy N</p>
+      <p>Powered by Unsplash API</p>
+      <p>Contact: dreambeatzz09@gmail.com</p>
+      <form class="query-form" id="queryForm">
+        <input class="query" id="queryInput" placeholder="Any query?" aria-label="Send a message">
+        <button type="submit" aria-label="Send message"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i></button>
+      </form>
+    </div>
+  </footer>
+
+  <!-- Lightbox Preview -->
+  <div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <img class="lightbox-img" id="lightbox-img" alt="Expanded gallery image">
+    <button class="prev" type="button" aria-label="Previous image">&#10094;</button>
+    <button class="next" type="button" aria-label="Next image">&#10095;</button>
+  </div>
+
+  <script>
+    const grid = document.getElementById('imageGrid');
+    const accessKey = "FPDSfhZmbw3NXr_7oLQWLkk-Sk3jzmlHVrbRttYI2Ts"; // Unsplash API key
+
+    let currentQuery = 'nature';
+    let currentPage = 1;
+    let showingSaved = false;
+    let isLoading = false;
+    let activeCollection = null;
+    let viewRequest = 0;
+    let generationRun = 0;
+
+    const galleryTitle = document.getElementById('galleryTitle');
+    const galleryStatus = document.getElementById('galleryStatus');
+    const emptyState = document.getElementById('emptyState');
+    const savedCount = document.getElementById('savedCount');
+    const favoritesToggle = document.getElementById('favoritesToggle');
+    const themeToggle = document.getElementById('themeToggle');
+    const clearSearch = document.querySelector('.clear-search');
+    const dropdown = document.querySelector('.dropdown');
+    const categoriesToggle = dropdown.querySelector(':scope > .navbar-link');
+    const genAIBtn = document.getElementById('genAIBtn');
+    const genaiPanel = document.getElementById('genaiPanel');
+    const closeGenAIPanel = document.getElementById('closeGenAIPanel');
+
+    function getSavedImages() {
+      return JSON.parse(localStorage.getItem('savedImages')) || [];
+    }
+
+    function getCollection(name) {
+      return JSON.parse(localStorage.getItem(name)) || [];
+    }
+
+    function setCollection(name, items) {
+      localStorage.setItem(name, JSON.stringify(items));
+    }
+
+    function updateSavedCount() {
+      savedCount.textContent = getSavedImages().length;
+    }
+
+    function updateStatus(message) {
+      galleryStatus.textContent = message;
+    }
+
+    function renderGeneratedImage(prompt) {
+      const generationCount = 6;
+      const seedStart = Math.floor(Math.random() * 1000000);
+      const runId = ++generationRun;
+      const safePrompt = prompt.replace(/"/g, '&quot;');
+      const qualityPrompt = `high quality, sharp focus, crisp details, professional composition, ${prompt}`;
+      const encodedQualityPrompt = encodeURIComponent(qualityPrompt);
+      grid.classList.add('ai-generated-results');
+      for (let index = 0; index < generationCount; index += 1) {
+        if (runId !== generationRun || !grid.classList.contains('ai-generated-results')) return;
+        const imageUrl = `https://image.pollinations.ai/prompt/${encodedQualityPrompt}?width=1024&height=1024&model=flux&enhance=true&nologo=true&seed=${seedStart + index}`;
+        const div = document.createElement('div');
+        div.className = 'gallery-item generated-item';
+        div.innerHTML = `
+          <span class="generated-badge"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> AI generated</span>
+          <img src="${imageUrl}" alt="AI generated image: ${safePrompt}">
+          <div class="custo">
+            <button onclick="like(this)" class="likebtn" aria-label="Like image"><i class="fa-solid fa-heart" aria-hidden="true"></i></button>
+            <button onclick="download(this)" class="downbtn" aria-label="Download image"><i class="fa-solid fa-download" aria-hidden="true"></i></button>
+            <button onclick="save(this)" class="savebtn" aria-label="Save image"><i class="fa-solid fa-bookmark" aria-hidden="true"></i></button>
+          </div>`;
+        grid.appendChild(div);
+        const image = div.querySelector('img');
+        let retryCount = 0;
+        image.addEventListener('error', () => {
+          if (retryCount < 2) {
+            retryCount += 1;
+            updateStatus(`Retrying AI image ${index + 1} of ${generationCount}...`);
+            window.setTimeout(() => {
+              image.src = `${imageUrl}&retry=${retryCount}`;
+            }, 3500);
+            return;
+          }
+          div.remove();
+          updateStatus('Some AI images could not be generated. Try another prompt.');
+        });
+        image.addEventListener('load', () => updateStatus('AI generated photos are ready'), { once: true });
+      }
+      updateGalleryImages();
+      emptyState.hidden = true;
+    }
+
+    function getVisualQuery(prompt) {
+      return prompt
+        .toLowerCase()
+        .replace(/\b(create|generate|make|an?|the|image|picture|photo|please|of|for|with)\b/g, ' ')
+        .replace(/[^a-z0-9\s-]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim() || 'nature';
+    }
+
+    // Fetch images
+    function loadImages(topic = 'nature', count = 10, page = 1) {
+      if (isLoading || showingSaved) return;
+      generationRun += 1;
+      grid.classList.remove('single-generated', 'ai-generated-results');
+      isLoading = true;
+      const requestId = ++viewRequest;
+      currentQuery = topic;
+      currentPage = page;
+      updateStatus(page === 1 ? 'Loading images...' : 'Finding more images...');
+      fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(topic)}&per_page=${count}&page=${page}&client_id=${accessKey}`)
+        .then(res => {
+          if (!res.ok) throw new Error(`Unsplash error: ${res.status} ${res.statusText}`);
+          return res.json();
+        })
+        .then(data => {
+          if (requestId !== viewRequest) return;
+          if (Array.isArray(data.results)) {
+            data.results.forEach(photo => {
+              const imageSrc = photo.urls.small;
+              const isLiked = getCollection('likedImages').includes(imageSrc);
+              const isSaved = getSavedImages().includes(imageSrc);
+              const div = document.createElement('div');
+              div.className = 'gallery-item';
+              div.innerHTML = `
+                <img src="${imageSrc}" alt="${photo.alt_description || topic}">
+                <div class="custo">
+                  <button onclick="like(this)" class="likebtn${isLiked ? ' active' : ''}" aria-label="${isLiked ? 'Unlike' : 'Like'} image">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                         viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" 
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                         class="feather feather-heart">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 
+                               5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 
+                               7.78l1.06 1.06L12 21.23l7.78-7.78 
+                               1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                  </button>
+                  <button onclick="download(this)" class="downbtn" aria-label="Download image">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                         viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" 
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                         class="feather feather-download">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 
+                               1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                  </button>
+                  <button onclick="save(this)" class="savebtn${isSaved ? ' active' : ''}" aria-label="${isSaved ? 'Remove from saved' : 'Save image'}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                         viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" 
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                         class="feather feather-bookmark">
+                      <path d="M19 21l-7-5-7 5V5a2 2 0 0 
+                               1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                  </button>
+                </div>`;
+              grid.appendChild(div);
+            });
+            updateGalleryImages(); // wire up lightbox
+            updateStatus(`${grid.children.length} images in ${topic}`);
+            emptyState.hidden = grid.children.length !== 0;
+          }
+          isLoading = false;
+        })
+        .catch(err => {
+          if (requestId !== viewRequest) return;
+          console.error('Error loading images:', err);
+          updateStatus('Unable to load images. Try again.');
+          isLoading = false;
+        });
+    }
+
+    // Initial load
+    loadImages('nature', 10);
+
+    // Like, Download, Save
+    function like(button) {
+      const img = button.closest('.gallery-item').querySelector('img');
+      let liked = getCollection('likedImages');
+      const isLiked = liked.includes(img.src);
+      liked = isLiked ? liked.filter(src => src !== img.src) : [...liked, img.src];
+      setCollection('likedImages', liked);
+      button.classList.toggle('active', !isLiked);
+      button.setAttribute('aria-label', isLiked ? 'Like image' : 'Unlike image');
+      if (activeCollection === 'likedImages' && isLiked) {
+        button.closest('.gallery-item').remove();
+        updateCollectionState('likedImages');
+      }
+    }
+    function download(button) {
+      const img = button.closest('.gallery-item').querySelector('img');
+      const downloaded = getCollection('downloadedImages');
+      if (!downloaded.includes(img.src)) setCollection('downloadedImages', [...downloaded, img.src]);
+      button.classList.add('active');
+      const link = document.createElement('a');
+      link.href = img.src;
+      link.download = "unsplash-image.jpg";
+      link.click();
+      updateStatus('Image download started');
+    }
+    function save(button) {
+      const img = button.closest('.gallery-item').querySelector('img');
+      let saved = getSavedImages();
+      if (saved.includes(img.src)) {
+        saved = saved.filter(src => src !== img.src);
+        button.classList.remove("active");
+        button.setAttribute('aria-label', 'Save image');
+      } else {
+        saved.push(img.src);
+        button.classList.add("active");
+        button.setAttribute('aria-label', 'Remove from saved');
+      }
+      localStorage.setItem('savedImages', JSON.stringify(saved));
+      updateSavedCount();
+      if (activeCollection === 'savedImages' && !saved.includes(img.src)) {
+        button.closest('.gallery-item').remove();
+        updateCollectionState('savedImages');
+      }
+    }
+
+    function updateCollectionState(collectionName) {
+      const count = grid.querySelectorAll('.gallery-item').length;
+      const label = collectionName === 'likedImages' ? 'liked' : collectionName === 'downloadedImages' ? 'downloaded' : 'saved';
+      emptyState.querySelector('strong').textContent = `No ${label} images yet`;
+      emptyState.querySelector('span').textContent = `Your ${label} collection will appear here.`;
+      emptyState.hidden = count !== 0;
+      updateStatus(count ? `${count} ${label} image${count === 1 ? '' : 's'}` : `Your ${label} collection is empty`);
+    }
+
+    function showCollection(collectionName, title) {
+      activeCollection = collectionName;
+      showingSaved = true;
+      generationRun += 1;
+      grid.classList.remove('single-generated', 'ai-generated-results');
+      grid.innerHTML = '';
+      const images = getCollection(collectionName);
+      galleryTitle.textContent = title;
+      images.forEach(src => {
+        const div = document.createElement('div');
+        div.className = 'gallery-item saved-item';
+        const isLiked = getCollection('likedImages').includes(src);
+        const isSaved = getSavedImages().includes(src);
+        div.innerHTML = `<img src="${src}" alt="${title}"><div class="custo"><button onclick="like(this)" class="likebtn${isLiked ? ' active' : ''}" aria-label="${isLiked ? 'Unlike' : 'Like'} image"><i class="fa-solid fa-heart" aria-hidden="true"></i></button><button onclick="download(this)" class="downbtn" aria-label="Download image"><i class="fa-solid fa-download" aria-hidden="true"></i></button><button onclick="save(this)" class="savebtn${isSaved ? ' active' : ''}" aria-label="${isSaved ? 'Remove from saved' : 'Save image'}"><i class="fa-solid fa-bookmark" aria-hidden="true"></i></button></div>`;
+        grid.appendChild(div);
+      });
+      updateGalleryImages();
+      updateCollectionState(collectionName);
+    }
+
+    // Search bar
+    const SearchInput = document.querySelector('.search-input');
+    SearchInput.addEventListener('keydown', function(e) {
+      if (e.key === "Enter") {
+        const query = SearchInput.value.trim();
+        if (query) {
+          showingSaved = false;
+          activeCollection = null;
+          galleryTitle.textContent = `Explore ${query}`;
+          grid.innerHTML = "";
+          loadImages(query, 10, 1);
+        }
+      }
+    });
+
+    // Infinite scroll
+    window.addEventListener('scroll', () => {
+      if (grid.classList.contains('ai-generated-results')) return;
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+        loadImages(currentQuery, 10, ++currentPage);
+      }
+    });
+
+    // Category links
+    document.querySelectorAll('.category-link').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const topic = link.textContent.trim().toLowerCase();
+        showingSaved = false;
+        activeCollection = null;
+        galleryTitle.textContent = `Explore ${topic}`;
+        grid.innerHTML = "";
+        loadImages(topic === 'all' ? 'nature' : topic, 10, 1);
+      });
+    });
+
+    clearSearch.addEventListener('click', () => {
+      SearchInput.value = '';
+      showingSaved = false;
+      activeCollection = null;
+      galleryTitle.textContent = 'Explore nature';
+      grid.innerHTML = '';
+      loadImages('nature', 10, 1);
+      SearchInput.focus();
+    });
+
+    categoriesToggle.addEventListener('click', e => {
+      e.preventDefault();
+      const isOpen = dropdown.classList.toggle('is-open');
+      categoriesToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    document.addEventListener('click', e => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('is-open');
+        categoriesToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    genAIBtn.addEventListener('click', () => genaiPanel.classList.toggle('active'));
+    closeGenAIPanel.addEventListener('click', () => genaiPanel.classList.remove('active'));
+
+    document.getElementById('likedBtn').addEventListener('click', () => showCollection('likedImages', 'Liked images'));
+    document.getElementById('downloadedBtn').addEventListener('click', () => showCollection('downloadedImages', 'Downloaded images'));
+
+    document.getElementById('generateBtn').addEventListener('click', () => {
+      const promptInput = document.getElementById('promptInput');
+      const prompt = promptInput.value.trim();
+      const genaiStatus = document.getElementById('genaiStatus');
+      if (!prompt) {
+        genaiStatus.textContent = 'Describe an image to explore.';
+        promptInput.focus();
+        return;
+      }
+      showingSaved = false;
+      activeCollection = null;
+      viewRequest += 1;
+      isLoading = false;
+      grid.innerHTML = '';
+      const visualQuery = getVisualQuery(prompt);
+      galleryTitle.textContent = `Inspired by ${prompt}`;
+      genaiStatus.textContent = 'Creating 6 AI-generated variations...';
+      genaiPanel.classList.remove('active');
+      currentQuery = visualQuery;
+      currentPage = 1;
+      renderGeneratedImage(prompt);
+      promptInput.value = '';
+    });
+
+    favoritesToggle.addEventListener('click', () => {
+      if (showingSaved && activeCollection === 'savedImages') {
+        showingSaved = false;
+        activeCollection = null;
+        grid.innerHTML = '';
+        galleryTitle.textContent = `Explore ${currentQuery}`;
+        loadImages(currentQuery, 10, 1);
+        return;
+      }
+      showingSaved = !showingSaved;
+      activeCollection = showingSaved ? 'savedImages' : null;
+      grid.innerHTML = '';
+      emptyState.hidden = true;
+      if (showingSaved) {
+        const saved = getSavedImages();
+        galleryTitle.textContent = 'Saved images';
+        showCollection('savedImages', 'Saved images');
+      } else {
+        galleryTitle.textContent = `Explore ${currentQuery}`;
+        loadImages(currentQuery, 10, 1);
+      }
+    });
+
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('night-mode');
+      const isNight = document.body.classList.contains('night-mode');
+      themeToggle.setAttribute('aria-label', isNight ? 'Switch to day mode' : 'Switch to night mode');
+      localStorage.setItem('nightMode', isNight);
+    });
+
+    if (localStorage.getItem('nightMode') === 'true') {
+      document.body.classList.add('night-mode');
+      themeToggle.setAttribute('aria-label', 'Switch to day mode');
+    }
+    updateSavedCount();
+
+    document.getElementById('homeLink').addEventListener('click', e => {
+      e.preventDefault();
+      showingSaved = false;
+      activeCollection = null;
+      grid.innerHTML = '';
+      galleryTitle.textContent = 'Explore nature';
+      loadImages('nature', 10, 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Smooth scroll to footer
+    document.querySelector('.navbar-link[href="#footer"]').addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('contactLink').addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('ContactUs').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('queryForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const queryInput = document.getElementById('queryInput');
+      const message = queryInput.value.trim();
+      if (!message) return;
+      queryInput.value = '';
+      queryInput.placeholder = 'Thanks for your message!';
+      setTimeout(() => { queryInput.placeholder = 'Any query?'; }, 2200);
+    });
+
+    // Lightbox setup
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.querySelector('.close');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+
+    let currentIndex = 0;
+    let galleryImages = [];
+
+    function updateGalleryImages() {
+      galleryImages = Array.from(document.querySelectorAll('.gallery-item img'));
+      galleryImages.forEach((img, index) => {
+        img.addEventListener('click', () => {
+          currentIndex = index;
+          showImage(currentIndex);
+          lightbox.style.display = 'flex';
+        });
+      });
+    }
+
+    function showImage(index) {
+      if (!galleryImages.length) return;
+      lightboxImg.src = galleryImages[index].src;
+      lightboxImg.alt = galleryImages[index].alt || 'Expanded gallery image';
+    }
+
+    closeBtn.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (!galleryImages.length) return;
+      currentIndex = (currentIndex + 1) % galleryImages.length;
+      showImage(currentIndex);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (!galleryImages.length) return;
+      currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+      showImage(currentIndex);
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.style.display === 'flex') {
+        if (e.key === 'ArrowRight') {
+          currentIndex = (currentIndex + 1) % galleryImages.length;
+          showImage(currentIndex);
+        } else if (e.key === 'ArrowLeft') {
+          currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+          showImage(currentIndex);
+        
+
+
+
+       } else if (e.key === 'Escape') {
+          lightbox.style.display = 'none';
+        }
+      }
+    });
+
+    // Click outside image to close
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
